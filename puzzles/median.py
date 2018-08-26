@@ -129,11 +129,9 @@ l = ListWithMedian()
 
 for x in r:
     l.insert(x)
-    print(l.median-median(l.l))
+    # print(l.median-median(l.l))
     
 for x in range(len(r)-1):
     l.remove()
     print(l.median - median(l.l))
-
-
 

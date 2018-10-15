@@ -28,9 +28,13 @@ class HashTable():
 	
 
 h = HashTable(17, 3)
+h.put(17+9)
 h.put(9)
 
+print(h.slots[h.find(17+9)])
 
-print(h.find(9))
+
+
+# print(h.find(9))
 h.p()
 

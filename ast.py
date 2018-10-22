@@ -1,3 +1,16 @@
+from random import random, randint, choice
+
+
+def randomExp(n):
+	ops = ["+", "-", "*", "/"]
+	r = ""
+	for x in range(n):
+		op = choice(ops)
+		left = randint(1, 9)
+		right = randint(1, 9)
+		r = r + str(left) + " " + op + " " + str(right)
+	return r
+
 class ANode():
 	def __init__(self,token_type, token_value):
 		self.token_type = token_type
@@ -135,6 +148,9 @@ def to_nodes(tokens):
 	return map(lambda t: to_node(t), tokens)
 
 
+def is_op(token):
+	return token in ['/', '*', '-', '+']
+
 def to_ast(tokens):
 	node = TreeNode(0, None)
 	tree = SimpleTree(node)
@@ -169,10 +185,54 @@ def print_tree(t, pad=" "):
 	if (t.right != None):
 		print_tree(t.right, " " * (len(pad)+1))
 
-tokens = tokenize("2 + 2 * 2 - 10 * 9")
-# print(tokens)
-ast = to_ast(tokens)
+def eval_op(op, left, right):
+	a = float(left)
+	b = float(right)
+
+	if op == '+':
+		return a + b
+	elif op == '-':
+		return a - b
+	elif op == '*':
+		return a * b
+	elif op == '/':
+		return a /b
 
 
-print_tree(ast.root)
+
+def eval_ast(ast):
+	if (is_op(ast.value)):
+		left_result = eval_ast(ast.left)
+		right_result = eval_ast(ast.right)
+		ast.result = eval_op(ast.value, left_result, right_result)
+		ast.trans = '(' + ast.left.trans + ast.value + ast.right.trans + ')'
+		return ast.result
+	else:
+		ast.result = int(ast.value)
+		ast.trans = ast.value
+		return ast.result
+
+
+exp = "20 / 4 + 5 * 7 - 20 + 9 * 7"
+
+
+# print(ast.root.trans)
+# print_tree(ast.root)
+# print(randomExp(10))
+
+
+for x in range(100):
+	exp = randomExp(20)
+	tokens = tokenize(exp)
+	ast = to_ast(tokens)
+	eval_ast(ast.root)
+	ast_result = ast.root.result
+	eval_result = eval(exp)
+	d = abs(ast_result) - abs(eval_result)
+
+	print(exp)
+	print("Result from AST", ast_result, "Result from Eval", eval_result, "Diff: ", d)
+	
+	
+
 

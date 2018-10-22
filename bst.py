@@ -113,19 +113,7 @@ class Tree():
 
 # a = sorted([1,2,3,4,5,6,7,8,9,10])
 
-b = rand(1, 100, 1000) 
-b.append(19198)
-a = sorted(b)
 
-tree = Tree()
-bst_tree = BSTTree()
-
-
-start = time.time()
-for x in a:
-    bst_tree.add(x)
-end = time.time()
-print("Tree (node) time: " + str((end - start)))
 
 
 a = sorted(rand(1, 100, 999))

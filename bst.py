@@ -98,8 +98,10 @@ class Tree():
             if index >= len(self.items) - 1:
                 return None
 
-            if self.items[index] == value or self.items[index] is None:
+            if self.items[index] == value:
                 return index
+            elif self.items[index] is None:
+                return None
             elif self.items[index] < value:
                 return aux(self.right_child_index(index))
             else:
@@ -109,15 +111,14 @@ class Tree():
 
 
 
-a = sorted(rand(1, 100, 1000))
+# a = sorted([1,2,3,4,5,6,7,8,9,10])
+
+b = rand(1, 100, 1000) 
+b.append(19198)
+a = sorted(b)
 
 tree = Tree()
 bst_tree = BSTTree()
-
-start = time.time()
-tree.from_array(a)
-end = time.time()
-print("Tree (array) time: " + str((end - start)))
 
 
 start = time.time()
